@@ -1,7 +1,6 @@
 import os
 import Pyro4
 
-# Clase expuesta para calcular el factorial
 @Pyro4.expose
 class FactorialServer:
     def factorial(self, n):
@@ -10,15 +9,23 @@ class FactorialServer:
         else:
             return n * self.factorial(n - 1)
 
-# Función para iniciar el servidor Pyro4
 def start_server():
     # Captura el puerto proporcionado por Render
-    port = int(os.getenv("PORT", "9090"))  # Si no hay variable de entorno, usa 9090
+    port = os.getenv("PORT", "5000")  # Usa 5000 como valor predeterminado
+    try:
+        port = int(port)  # Intenta convertir a entero
+    except ValueError:
+        print(f"Valor no válido para el puerto: {port}. Usando 5000 como valor predeterminado.")
+        port = 5000
+
     daemon = Pyro4.Daemon(host="0.0.0.0", port=port)
 
-    # Registra el objeto remoto y obtiene la URI
+    # Registra el servidor de nombres
+    ns = Pyro4.locateNS()
     uri = daemon.register(FactorialServer)
-    print(f"Servidor factorial disponible en {uri}")
+    ns.register("factorial.server", uri)
+
+    print(f"Servidor factorial disponible en {uri}")  # Esta línea imprime la URI
 
     # Mantiene el servidor corriendo
     daemon.requestLoop()
