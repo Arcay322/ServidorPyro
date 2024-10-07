@@ -48,7 +48,8 @@
   "keyToString": {
     "Python.servidor.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master"
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "C:/Users/Arcay.w33/PycharmProjects/lab6_pyro"
   }
 }]]></component>
   <component name="SharedIndexes">
@@ -115,7 +116,23 @@
       <option name="project" value="LOCAL" />
       <updated>1728261979040</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Server">
+      <option name="closed" value="true" />
+      <created>1728265329539</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1728265329539</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Server">
+      <option name="closed" value="true" />
+      <created>1728266170636</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1728266170636</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
