@@ -1,11 +1,9 @@
 version: 1
 build:
   env:
-    # Se pueden establecer variables de entorno aquí si es necesario
     PYTHONUNBUFFERED: "1"
   dockerfile: Dockerfile
 
-# Definir servicios, en este caso, un servicio web
 services:
   - type: web
     name: pyro4-server
