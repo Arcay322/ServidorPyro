@@ -1,37 +1,21 @@
-import os
 import Pyro4
-import threading
+import os
 
 @Pyro4.expose
-class FactorialServer:
+class FactorialServer(object):
     def factorial(self, n):
-        if n == 0:
+        if n == 0 or n == 1:
             return 1
         else:
             return n * self.factorial(n - 1)
 
-def start_nameserver():
-    # Inicia el nameserver
-    Pyro4.naming.startNS(host="0.0.0.0", port=9090)
-
 def start_server():
-    # Inicia el Nameserver en un hilo
-    ns_thread = threading.Thread(target=start_nameserver)
-    ns_thread.start()
-
-    # Usa un puerto estático para pruebas
-    port = 5000
-    print(f"Iniciando el servidor en el puerto {port}")
-
-    # Inicia el daemon del servidor
-    daemon = Pyro4.Daemon(host="0.0.0.0", port=port)
-
-    # Registra el servidor en el Nameserver
-    uri = daemon.register(FactorialServer)
-    print(f"Servidor factorial disponible en {uri}")
-
-    # Mantiene el servidor corriendo
-    daemon.requestLoop()
+    # Obtener el puerto desde las variables de entorno
+    port = int(os.getenv("PORT", 9090))  # Usamos 9090 como puerto por defecto si no está definido
+    daemon = Pyro4.Daemon(port=port)  # Crear un daemon Pyro4 en el puerto especificado
+    uri = daemon.register(FactorialServer)  # Registrar el servidor
+    print(f"Servidor disponible en URI: {uri}")
+    daemon.requestLoop()  # Mantener el servidor corriendo
 
 if __name__ == "__main__":
     start_server()
