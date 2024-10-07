@@ -1,6 +1,11 @@
 import Pyro4
 from flask import Flask
 import threading
+import logging
+import time
+
+# Configurar logging
+logging.basicConfig(level=logging.INFO)
 
 # Crear una aplicación Flask para servir HTTP
 app = Flask(__name__)
@@ -21,7 +26,8 @@ def iniciar_servidor_pyro():
     Pyro4.config.HOST = "0.0.0.0"  # Hacer el servidor accesible externamente
     daemon = Pyro4.Daemon(host=Pyro4.config.HOST)
     uri = daemon.register(CalculadoraFactorial)
-    print(f"Servidor Pyro4 listo en la URI: {uri}")  # Asegúrate de que esta línea esté presente
+    time.sleep(1)  # Esperar 1 segundo antes de imprimir la URI
+    logging.info(f"Servidor Pyro4 listo en la URI: {uri}")  # Usar logging para imprimir la URI
     daemon.requestLoop()
 
 if __name__ == "__main__":
