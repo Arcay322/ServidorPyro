@@ -1,6 +1,7 @@
 import Pyro4
 import os
 from flask import Flask, jsonify
+from threading import Thread
 
 app = Flask(__name__)
 
@@ -18,7 +19,7 @@ class FactorialServer(object):
 @app.route('/uri')
 def get_uri():
     port = int(os.getenv("PORT", 9090))
-    uri = f"PYRO:obj_XXXXXX@0.0.0.0:{port}"  # Cambia 'obj_XXXXXX' por el identificador correcto después
+    uri = f"PYRO:obj_XXXXXX@0.0.0.0:{port}"  # Cambia 'obj_XXXXXX' por el identificador correcto
     return jsonify({"uri": uri})
 
 
@@ -32,11 +33,10 @@ def start_server():
     uri = daemon.register(FactorialServer)
 
     # Mantener el servidor Pyro corriendo en un hilo separado
-    from threading import Thread
     Thread(target=daemon.requestLoop).start()
 
     # Iniciar la aplicación Flask
-    app.run(host='0.0.0.0', port=port)
+    app.run(host='0.0.0.0', port=port, debug=True)
 
 
 if __name__ == "__main__":
