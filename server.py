@@ -10,9 +10,10 @@ class FactorialServer(object):
             return n * self.factorial(n - 1)
 
 def start_server():
-    # Obtener el puerto desde las variables de entorno
-    port = int(os.getenv("PORT", 9090))  # Usamos 9090 como puerto por defecto si no está definido
-    daemon = Pyro4.Daemon(port=port)  # Crear un daemon Pyro4 en el puerto especificado
+    # Obtener el puerto desde las variables de entorno proporcionadas por Render
+    port = int(os.getenv("PORT", 9090))  # Render asigna un puerto a través de la variable PORT
+    host = "0.0.0.0"  # Asegurarse de que Pyro4 escuche en todas las interfaces
+    daemon = Pyro4.Daemon(host=host, port=port)  # Crear un daemon Pyro4 en el puerto especificado y enlazarlo a 0.0.0.0
     uri = daemon.register(FactorialServer)  # Registrar el servidor
     print(f"Servidor disponible en URI: {uri}")
     daemon.requestLoop()  # Mantener el servidor corriendo
