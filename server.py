@@ -1,3 +1,4 @@
+import os
 import Pyro4
 
 @Pyro4.expose
@@ -9,8 +10,10 @@ class FactorialServer:
             return n * self.factorial(n - 1)
 
 def start_server():
-    # Iniciar el demonio Pyro
-    daemon = Pyro4.Daemon()
+    # Obtener el puerto de la variable de entorno que Render proporciona
+    port = int(os.getenv("PORT", "8080"))
+    # Iniciar el demonio Pyro en el puerto y host especificados
+    daemon = Pyro4.Daemon(host="0.0.0.0", port=port)
     uri = daemon.register(FactorialServer)  # Registrar la clase
     print("Servidor listo. URI:", uri)
     daemon.requestLoop()  # Mantener el servidor corriendo
