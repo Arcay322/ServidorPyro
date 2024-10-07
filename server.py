@@ -36,7 +36,7 @@ def start_server():
     Thread(target=daemon.requestLoop).start()
 
     # Iniciar la aplicación Flask
-    app.run(host='0.0.0.0', port=port, debug=True)
+    app.run(host='0.0.0.0', port=port)  # Asegúrate de que Flask escuche en el mismo puerto
 
 
 if __name__ == "__main__":
