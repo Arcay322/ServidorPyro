@@ -1,4 +1,5 @@
 import Pyro4
+import threading
 
 @Pyro4.expose
 class FactorialCalculator:
@@ -11,9 +12,12 @@ class FactorialCalculator:
         else:
             return n * self.factorial(n - 1)
 
+def start_nameserver():
+    """Inicia el Nameserver en un hilo separado."""
+    Pyro4.naming.startNS()
+
 def start_server():
     """Inicia el servidor."""
-    # Crear el daemon y registrar el objeto
     daemon = Pyro4.Daemon(host="0.0.0.0", port=9090)  # Escuchar en todas las interfaces y en el puerto 9090
     uri = daemon.register(FactorialCalculator)
 
@@ -27,4 +31,8 @@ def start_server():
     daemon.requestLoop()
 
 if __name__ == "__main__":
+    # Iniciar el Nameserver en un hilo separado
+    threading.Thread(target=start_nameserver, daemon=True).start()
+
+    # Iniciar el servidor
     start_server()
