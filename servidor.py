@@ -27,9 +27,10 @@ def iniciar_servidor_pyro():
     daemon = Pyro4.Daemon(host=Pyro4.config.HOST)
     uri = daemon.register(CalculadoraFactorial)
 
-    # Añadir un delay para permitir que el hilo se inicie correctamente
-    time.sleep(1)
-    logging.info(f"Servidor Pyro4 listo en la URI: {uri}")  # Usar logging para imprimir la URI
+    # Imprimir la URI usando el nombre de dominio de Render
+    public_uri = f"PYRO:{daemon._pyroId}@servidorpyro.onrender.com:{daemon._pyroPort}"
+    time.sleep(1)  # Esperar 1 segundo antes de imprimir la URI
+    logging.info(f"Servidor Pyro4 listo en la URI: {public_uri}")  # Usar logging para imprimir la URI
 
     try:
         daemon.requestLoop()
