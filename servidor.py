@@ -12,10 +12,7 @@ class FactorialCalculator:
             return n * self.factorial(n - 1)
 
 def start_server():
-    """Inicia el servidor y el Nameserver."""
-    # Iniciar el Nameserver en segundo plano
-    Pyro4.naming.startNS()
-
+    """Inicia el servidor."""
     # Crear el daemon y registrar el objeto
     daemon = Pyro4.Daemon(host="0.0.0.0", port=9090)  # Escuchar en todas las interfaces y en el puerto 9090
     uri = daemon.register(FactorialCalculator)
