@@ -26,9 +26,15 @@ def iniciar_servidor_pyro():
     Pyro4.config.HOST = "0.0.0.0"  # Hacer el servidor accesible externamente
     daemon = Pyro4.Daemon(host=Pyro4.config.HOST)
     uri = daemon.register(CalculadoraFactorial)
-    time.sleep(1)  # Esperar 1 segundo antes de imprimir la URI
+
+    # Añadir un delay para permitir que el hilo se inicie correctamente
+    time.sleep(1)
     logging.info(f"Servidor Pyro4 listo en la URI: {uri}")  # Usar logging para imprimir la URI
-    daemon.requestLoop()
+
+    try:
+        daemon.requestLoop()
+    except Exception as e:
+        logging.error(f"Ocurrió un error en el servidor Pyro4: {e}")
 
 if __name__ == "__main__":
     # Crear un hilo para correr el servidor Pyro4 en paralelo
