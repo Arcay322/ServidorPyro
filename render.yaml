@@ -1,8 +1,0 @@
-services:
-  - type: web
-    name: pyro4-server
-    env: python
-    plan: free
-    buildCommand: ""
-    startCommand: "python server.py"
-    autoDeploy: true
