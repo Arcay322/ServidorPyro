@@ -28,7 +28,7 @@ def iniciar_servidor_pyro():
     uri = daemon.register(CalculadoraFactorial)
 
     # Imprimir la URI usando el nombre de dominio de Render
-    public_uri = f"PYRO:{daemon._pyroId}@servidorpyro.onrender.com:{daemon._pyroPort}"
+    public_uri = f"{uri}"
     time.sleep(1)  # Esperar 1 segundo antes de imprimir la URI
     logging.info(f"Servidor Pyro4 listo en la URI: {public_uri}")  # Usar logging para imprimir la URI
 
