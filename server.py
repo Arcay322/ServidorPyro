@@ -20,8 +20,7 @@ class FactorialServer(object):
 @app.route('/')
 def index():
     # Obtener el puerto y la URI
-    port = int(os.getenv("PORT", 9090))  # Usar el puerto asignado por Render o 9090 como valor por defecto
-    # La URI se mostrará con 'localhost' si se ejecuta localmente
+    port = int(os.getenv("PORT", 8080))  # Cambiado a 8080 como puerto por defecto
     uri = f"PYRO:obj_{id(FactorialServer)}@0.0.0.0:{port}"  # Cambia esto según la implementación correcta
     return render_template_string('''
         <html>
@@ -36,13 +35,13 @@ def index():
 
 def start_flask():
     # Iniciar la aplicación Flask
-    port = int(os.getenv("PORT", 9090))
+    port = int(os.getenv("PORT", 8080))  # Cambiado a 8080
     app.run(host='0.0.0.0', port=port)
 
 
 def start_server():
     # Obtener el puerto desde las variables de entorno
-    port = int(os.getenv("PORT", 9090))  # Usamos 9090 como puerto por defecto si no está definido
+    port = int(os.getenv("PORT", 8080))  # Cambiado a 8080
     daemon = Pyro4.Daemon(port=port)  # Crear un daemon Pyro4 en el puerto especificado
     uri = daemon.register(FactorialServer)  # Registrar el servidor
 
